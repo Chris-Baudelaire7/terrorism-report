@@ -36,7 +36,7 @@ def data_geo_filter(dataframe, area):
 
 # data
 raw_data = pd.read_csv(
-    'https://raw.githubusercontent.com/Chris-Baudelaire7/terrorism_report/main/src/data/terrorism_database.csv',
+    'https://query.data.world/s/ct3wfjqi3nrmijjnpm2tgdioormi6h?dws=00000',
     engine="python",
     on_bad_lines="skip",
                  encoding='utf-8')
