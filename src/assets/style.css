@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+
+body {
+    font-family: Playfair Display, Merriweather, serif !important;
+    overflow-x: hidden !important;
+}
+
+
+nav {
+    border: none !important;
+}
+
+
+.nav-scroller {
+    position: relative;
+    z-index: 2;
+    height: 2.75rem;
+    overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 1rem;
+    margin-top: -1px;
+    overflow-x: auto;
+    text-align: center;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-scroller .nav-link {
+  padding-top: .75rem !important;
+  padding-bottom: .75rem !important;
+}
+
+.nav-scroller .nav-link:hover {
+  color: #fefefe !important;
+}
+
+.nav-scroller .active {
+  font-weight: 500 !important;
+}
+
+
+
+
+.btn {
+    color: white;
+    background-color:transparent !important;
+    border: 1px solid rgba(164, 164, 164, 0.263)
+}
+
+.m3 {
+  color:white !important;
+  background-color: transparent !important;
+  font-family: Lora !important;
+}
+
+.title {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* .layout {
+  margin: 
+} */
+
+
+/* dcc Dropdown -------------------------------------------------------------------------------------*/
+
+.Select-control {
+    background-color: rgb(0, 0, 0) !important;
+    border: 1px solid #404040c4 !important;
+    padding: 0px !important;
+}
+
+.Select-value-label {
+    color: #fff !important;
+    font-family: serif !important;
+    font-size: 16px !important;
+}
+
+.Select-value-icon {
+    color: grey !important;
+    font-size: 14px !important;
+    padding: 0px !important;
+}
+
+.Select, .Select--multi, .is-open {
+    background-color: rgb(0, 0, 0) !important;
+    color: rgb(255, 255, 255) !important;
+    font-family: serif !important;
+}
+
+.Select > * {
+    background-color: rgb(0, 0, 0) !important;
+    color: rgb(235, 235, 235) !important;
+    font-family: serif !important;
+    font-size: 16px !important;
+    border: 1px solid #40404068 !important;
+}
+
+/* end dcc Dropdown -------------------------------------------------------------------------------------*/
+
+
+.filtre {
+  /* position: sticky; */
+  padding: 7px;
+  /* top: 0; */
+  /* background-color: rgb(0, 0, 0); */
+  /* border: 1px solid #404040bf !important; */
+  /* z-index: 100000000 */
+}
+
+
+
+/* Chip mantine ---------------------------------------------------------------------------------------- */
+
+.mantine-15po0m8 > * {
+  background-color: transparent !important;
+  color: white !important;
+  font-family: serif !important;
+  border: none !important; 
+}
+
+.__mantine-ref-iconWrapper, .mantine-pibo38, .mantine-Chip-iconWrapper {
+  color: rgb(210, 28, 28) !important;
+}
+
+/* End Chip mantine ---------------------------------------------------------------------------------------- */
+
+
+.tabular {
+  background-color: transparent !important;
+}
+
+.tabular > * > * {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+
+.infolayer > *{
+  color: red !important;
+  background-color: red !important;
+  font-family: serif !important;
+}
+
+.test-color {
+  color:rgb(157, 191, 223),
+}
+
+/* .separate {
+  margin-top: 70px !important;
+  margin-bottom: 70px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 40% !important;
+  height: 1px !important;
+  background-color: rgb(156, 22, 22) !important;
+  color: transparent !important;
+} */
+
+.separate {
+  margin-top: 90px !important;
+  margin-bottom: 90px !important;
+  height: 20px !important;
+  background-color: rgb(32, 31, 31) !important;
+  color: transparent !important;
+}
+
+
+
+.title-section {
+  display: flex;
+  align-items: center;
+}
+
+.dash {
+  width: 10px;
+  height: 55px;
+  background: rgb(177, 12, 12);
+  margin-right: 10px
+}
+
+
+.affix {
+  width: 200px !important;
+  background-color: black !important;
+}
+
+*[class="output-example-loading"][data-dash-is-loading="true"]{
+    visibility: hidden;
+}
+*[class="output-example-loading"][data-dash-is-loading="true"]::before{
+    content: "Loading...";
+    display: inline-block;
+    color: magenta;
+    visibility: visible;
+}
