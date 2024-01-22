@@ -35,11 +35,7 @@ def data_geo_filter(dataframe, area):
 
 
 # data
-raw_data = pd.read_csv(
-    'https://query.data.world/s/ct3wfjqi3nrmijjnpm2tgdioormi6h?dws=00000',
-    engine="python",
-    on_bad_lines="skip",
-                 encoding='utf-8')
+raw_data = pd.read_csv('data/data.csv')
 raw_data = raw_data.copy().iloc[:, 1:]
 raw_data = render_codes_and_flag(raw_data, list(raw_data["country"].values), "country")
 
