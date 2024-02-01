@@ -35,9 +35,7 @@ def data_geo_filter(dataframe, area):
 
 
 # data
-raw_data = pd.read_csv(
-    '/Users/new/Desktop/Terrorisme/data.csv',
-    )
+raw_data = pd.read_csv('data/data.csv')
 raw_data = raw_data.copy().iloc[:, 1:]
 raw_data = render_codes_and_flag(raw_data, list(raw_data["country"].values), "country")
 
