@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from constants import *
-from src.utils import *
+from utils import *
 
 
 countries_most_affected = ["Iraq","Afghanistan","Pakistan","India","Syria", "Nigeria"]
@@ -35,7 +35,9 @@ def data_geo_filter(dataframe, area):
 
 
 # data
-raw_data = pd.read_csv('data/data.csv')
+raw_data = pd.read_csv(
+    '/Users/new/Desktop/Terrorisme/data.csv',
+    )
 raw_data = raw_data.copy().iloc[:, 1:]
 raw_data = render_codes_and_flag(raw_data, list(raw_data["country"].values), "country")
 
@@ -47,6 +49,9 @@ casualties_limit = [-1, 0, 5, 10, 20, 50, float('inf')]
 etiquettes = ["1-5 décès", "6-10 décès", "11-20 décès", "plus de 20 décès"]
 casualties_labels = ["0 décès", "1-5 victimes", "6-10 victimes", "11-20 victimes", "21-50 victimes", "plus de 50 décès"]
 
+# Rename
+
+raw_data.rename(columns=dict_rename, inplace=True)
 
 # New features
 raw_data['nkill_categories'] = pd.cut(raw_data['nkill'], bins=limites, labels=etiquettes)

@@ -10,7 +10,6 @@ from utils import *
 
 @callback(
     Output("geo-map", "figure"),
-    Output("geo-map_", "figure"),
     Input("range-slider", "value"),
     Input("filter-geo", "value"),
     Input("cause", "value"),
@@ -42,22 +41,11 @@ def region_map(range_date, geo, cause, group, attack, target, weapon):
         )
     )
     
-    fig2 = go.Figure(
-        go.Choropleth(
-            z=data[cause],
-            locations=data["code"],
-            colorscale=px.colors.sequential.Reds[1:],
-            marker=dict(line=dict(width=.3, color="black")),
-            customdata=data,
-            showscale=False
-        )
-    )
-    
     def layout(height):
         return dict(
             **update_layout_geo,
             height=height,
-            template="plotly_dark",
+            # template="plotly_dark",,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             margin=dict(l=0, r=0, t=0, b=0),
@@ -65,9 +53,8 @@ def region_map(range_date, geo, cause, group, attack, target, weapon):
         )
         
     fig.update_layout(**layout(600))
-    fig2.update_layout(**layout(150))
     
-    return fig, fig2
+    return fig
 
 
 
@@ -126,14 +113,14 @@ def eries_area(range_date, geo, cause, group, attack, target, weapon):
             position=1
         ),
 
-        font=dict(family="serif", color="white"),
+        font=dict(family="serif", color="black"),
         height=450,
         title={
             "text": (
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>{geo}: 1970 à 2017</sup>"
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
                 "y": 0.93,
                 "xanchor": "right",
@@ -219,7 +206,7 @@ def share_of(range_date, geo, cause, group, attack, target, weapon):
                     
         fig2.update_layout(
             height=450,
-            template="plotly_dark",
+            # template="plotly_dark",,
             showlegend=False,
             margin=dict(autoexpand=True, l=0, r=0, t=80),
             plot_bgcolor="rgba(0, 0, 0, 0)",
@@ -229,7 +216,7 @@ def share_of(range_date, geo, cause, group, attack, target, weapon):
                         f"<b>{title_pie}</b><br />"
                         f"<sup style='color:silver'>En comparaison au reste du monde"
                     ),
-                "font": {"family": "serif", "size": 30, "color": "white"},
+                "font": {"family": "serif", "size": 30, "color": "black"},
                 "x": 0.93,
                 "y": 0.86,
                 "xanchor": "right",

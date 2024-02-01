@@ -22,7 +22,7 @@ def quincenal_average():
     fig = go.Figure()
 
     colors=['rgb(254,224,210)', 'rgb(103,0,13)', 'rgb(203,24,29)']
-    marker_colors=['white', "crimson", 'orangered']
+    marker_colors=['black', "crimson", 'orangered']
     marker_symbol=['circle', "diamond", 'square']
     positions=["bottom center", "top left", "top right"]
     columns=list(dfr.columns[1:])
@@ -41,48 +41,32 @@ def quincenal_average():
 
     fig.add_vrect(
         x0="2000", x1="2015",
-        line_width=0, fillcolor="red", opacity=.16,
-    )
-    
-    fig.add_vrect(
-        x0="1995", x1="2000",
-        line_width=0, fillcolor="lightyellow", opacity=.16,
+        line_width=0, fillcolor="red", opacity=.06,
     )
     
     fig.add_vrect(
         x0="1970", x1="1995",
-        line_width=0, fillcolor="red", opacity=.16,
-    )
-
-    fig.add_vrect(
-        x0="2015", x1="2020",
-        line_width=0, fillcolor="lightyellow", opacity=.16,
+        line_width=0, fillcolor="red", opacity=.06,
     )
 
     fig.add_vline(
         x="2000",
-        line_width=.6, line_color="white",
+        line_width=.6, line_color="black",
     )
 
     fig.add_vline(
         x="2015",
-        line_width=.6, line_color="white",
+        line_width=.6, line_color="black",
     )
     
     fig.add_vline(
         x="1995",
-        line_width=.6, line_color="white",
+        line_width=.6, line_color="black",
     )
-
-    fig.add_vline(
-        x="2020",
-        line_width=.6, line_color="white",
-    )
-
 
     fig.update_layout(
         margin=dict(l=0, r=0, b=0, t=100),
-        template="plotly_dark",
+        #template="plotly_dark",
         hovermode="x",
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",
@@ -95,7 +79,7 @@ def quincenal_average():
                     f"<b>Moyenne quinquennale du nombre<br> d'attaque, de blessés et de décès</b><br />"
                     f"<sup style='color:silver'>Moyenne calculée sur une période de 5 ans "
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.92,
             "y": 0.96,
             "xanchor": "right",
@@ -119,7 +103,7 @@ def quincenal_average():
                 yanchor="middle",
                 # arrowwidth=1,
                 # arrowhead=2,
-                # arrowcolor="white",
+                # arrowcolor="black",
                 ax=0, ay=40
             ),
             dict(
@@ -146,43 +130,6 @@ def quincenal_average():
 
 
 
-def property_graph():
-    data_damage = raw_data[raw_data["property"] == 1].groupby(["year"], as_index=False).size()
-    data_nkill = (raw_data[raw_data["property"] == 1]).groupby(["year"], as_index=False)[["nkill", "nwound"]].sum()
-    data = pd.merge(data_nkill, data_damage, on="year")
-    data["casualty"] = data["nkill"] + data["nwound"]
-
-    fig = px.scatter(data, x="size", y="casualty", size="casualty", color="casualty",
-                    color_continuous_scale="reds", trendline="ols")
-    fig.update_traces(
-        marker=dict(line=dict(color="black"), opacity=1)
-    )
-    fig.update_coloraxes(showscale=False)
-
-    fig.update_layout(
-        hovermode="x",
-        font={"family": "Lato", "size": 14},
-        template="plotly_dark",
-        plot_bgcolor="rgba(0, 0, 0, 0)",
-        paper_bgcolor="rgba(0, 0, 0, 0)",
-        margin=dict(l=0, r=0, b=30, t=10),
-        height=450,
-        xaxis=dict(title="Dégâts matériels enregistrés", showgrid=False, zeroline=False),
-        yaxis=dict(title="Nombre de victime", showgrid=False, zeroline=False),
-        title={
-            "text": (
-                    f"<b>Lien entre les dégâts matériels<br>et le nombre de victimes</b><br />"
-                    f"<sup style='color:silver'>Les dégâts matériels ont-ils été suivis de victimes? "
-                ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
-            "x": 0.1,
-                "y": 0.93,
-                "xanchor": "left",
-                "yanchor": "top",
-        },
-    )
-
-    return fig
 
 
 
@@ -215,7 +162,7 @@ def country_map_by_year():
             bordercolor="black",
             borderwidth=4,
             currentvalue={"prefix": "Taux de décès en "},
-            font=dict(family="serif", size=15, color="white"),
+            font=dict(family="serif", size=15, color="black"),
             #"),
         )],
         title={
@@ -223,7 +170,7 @@ def country_map_by_year():
                     f"<b>Taux de décès par 100 mille habitants</b><br />"
                     f"<sup style='color:silver'>situtation globale dans le monde"
                 ),
-            "font": {"family": "serif", "size": 32, "color": "white"},
+            "font": {"family": "serif", "size": 32, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",
@@ -252,7 +199,7 @@ def country_map_by_year():
         showactive=False,
         type="buttons",
         pad=dict(r=10),
-        font=dict(family="serif", size=12, color="white"),
+        font=dict(family="serif", size=12, color="black"),
         x=.1, y=0.1,
         bgcolor="black", bordercolor="firebrick", borderwidth=1
     )]

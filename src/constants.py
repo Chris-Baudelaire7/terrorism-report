@@ -1,8 +1,8 @@
 timeout = 200
 
-mapbox_access_token = 'pk.eyJ1IjoicXM2MjcyNTI3IiwiYSI6ImNraGRuYTF1azAxZmIycWs0cDB1NmY1ZjYifQ.I1VJ3KjeM-S613FLv3mtkw'
+access_api_token = "pk.eyJ1IjoiY2hyaXMtYmF1ZGVsYWlyZSIsImEiOiJjbHB6dWYxb2wxOWdmMnJvOGtzaDVyb3Y2In0.pXQ81pAk9gRoUHXDnNsjJg"
+satellite_style = "mapbox://styles/mapbox/satellite-streets-v11"
 
-scale = ['rgb(103,0,13)','rgb(203,24,29)','rgb(251,106,74)', 'rgb(252,146,114)','rgb(253,219,199)','rgb(255,245,240)']
  
 columns = [
     'iyear', 'imonth', 'iday', 'extended', 'country_txt', 'region_txt',
@@ -107,3 +107,59 @@ attacktype_to_group=[
 weaptype_to_group = ["Biological","Chemical","Fake Weapons","Other","Radiological", "Melee", "Unknown","Incendiary",
       "Sabotage Equipment","Vehicle"]
 
+
+loading = {
+    "graphic": {
+        "elements": [
+            {
+                "type": 'text',
+                "left": 'center',
+                "top": 'center',
+                "style": {
+                    "text": 'Apache ECharts',
+                    "fontSize": 80,
+                    "fontWeight": 'bold',
+                    "lineDash": [0, 200],
+                    "lineDashOffset": 0,
+                    "fill": 'transparent',
+                    "stroke": '#000',
+                    "lineWidth": 1
+                },
+                "keyframeAnimation": {
+                    "duration": 3000,
+                    "loop": True,
+                    "keyframes": [
+                        {
+                            "percent": 0.7,
+                            "style": {
+                                "fill": 'transparent',
+                                "lineDashOffset": 200,
+                                "lineDash": [200, 0]
+                            }
+                        },
+                        {
+                            "percent": 0.8,
+                            "style": {
+                                "fill": 'transparent'
+                            }
+                        },
+                        {
+                            "percent": 1,
+                            "style": {
+                                "fill": 'black'
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+
+
+active_tab_style = {
+    "font-family": "serif",
+    "border-bottom": "none"
+}
+
+tab_style = {"margin": "0"}

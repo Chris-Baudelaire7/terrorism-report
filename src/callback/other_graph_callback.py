@@ -40,7 +40,7 @@ def country_map_by_year(cause):
         **update_layout_geo,
         height=550,
         dragmode="lasso",
-        template="plotly_dark",
+        # template="plotly_dark",,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         margin=dict(l=0, r=0, b=0, t=0),
@@ -50,7 +50,7 @@ def country_map_by_year(cause):
             bordercolor="black",
             borderwidth=4,
             currentvalue={"prefix": "Nombre d'attaque terroriste en "},
-            font=dict(family="serif", size=15, color="white"),
+            font=dict(family="serif", size=15, color="black"),
             #"),
         )],
     )
@@ -76,7 +76,7 @@ def country_map_by_year(cause):
         showactive=False,
         type="buttons",
         pad=dict(r=10),
-        font=dict(family="serif", size=12, color="white"),
+        font=dict(family="serif", size=12, color="black"),
         x=.1, y=0.1,
         bgcolor="black", bordercolor="firebrick", borderwidth=1
     )]

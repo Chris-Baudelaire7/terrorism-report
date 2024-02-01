@@ -9,7 +9,7 @@ from data_preparation import *
 
 
 update_layout_simple = { 
-    "template":"plotly_dark",
+    # "template":"plotly_dark",
     "paper_bgcolor":"rgba(0,0,0,0)",
     "plot_bgcolor":"rgba(0,0,0,0)",
     "hovermode":"x",
@@ -27,15 +27,11 @@ update_layout_geo = {
         projection = dict(type = 'hyperelliptical'),
             
         lonaxis = dict(
-            showgrid = True,
-            gridcolor = 'rgb(40, 40, 40)',
-            gridwidth = 0.2,
+            showgrid = False,
             range = [-135, 155]
         ),
         lataxis = dict(
-            showgrid = True,
-            gridcolor = 'rgb(40, 40, 40)',
-            gridwidth = 0.2,
+            showgrid = False,
             range = [-55, 73]
         )
             
@@ -125,7 +121,7 @@ def get_colorscale(series: pd.Series):
         # Normalize to 0-1
         diff_norm[mask_below] = (diff[mask_below] - min_below) / (max_below - min_below)
 
-    # Create array of white colors with same shape as diff
+    # Create array of black colors with same shape as diff
     colors = np.full_like(diff, "rgb(255, 255, 255)", dtype="object")
 
     # Sample colors from colormaps, using normalized values
@@ -150,13 +146,13 @@ def dist_fig(data, colorscale, title):
                 orientation='h',
                 marker=dict(
                     color=colorscale[i],
-                    line=dict(color="black", width=3)
+                    line=dict(color="rgba(0,0,0,0)", width=2)
                 )
             ))
 
     fig.update_layout(
-        height=455,
-        font=dict(family='serif', size=18, color='white'),
+        height=440,
+        font=dict(family='serif', size=18, color='black'),
         xaxis=dict(
             showgrid=False,
             showline=False,
@@ -172,8 +168,8 @@ def dist_fig(data, colorscale, title):
         ),
         barmode='stack',
         autosize=True,
-        template='plotly_dark',
-        margin=dict(l=0, b=0, r=0),
+        # template='plotly_dark',
+        margin=dict(l=0, b=0, r=0, t=130),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         showlegend=False,
@@ -182,7 +178,7 @@ def dist_fig(data, colorscale, title):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Le terrorisme dans le monde "
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",
@@ -200,7 +196,7 @@ def dist_fig(data, colorscale, title):
                                 xanchor='right',
                                 text=str(yd),
                                 font=dict(family='serif', size=15,
-                                        color='white'),
+                                        color='black'),
                                 showarrow=False, align='right'))
         # labeling the first percentage of each bar (x_axis)
         annotations.append(dict(xref='x', yref='y',
@@ -215,7 +211,7 @@ def dist_fig(data, colorscale, title):
                                     x=xd[0] / 2, y=1.1,
                                     text=top_labels[0],
                                     font=dict(family='serif', size=15,
-                                        color='white'),
+                                        color='black'),
                                     showarrow=False))
         space = xd[0]
         for i in range(1, len(xd)):
@@ -232,7 +228,7 @@ def dist_fig(data, colorscale, title):
                                             x=space + (xd[i]/2), y=1.1,
                                             text=top_labels[i],
                                             font=dict(family='serif', size=15,
-                                        color='white'),
+                                        color='black'),
                                             showarrow=False))
                 space += xd[i]
 
@@ -280,7 +276,7 @@ def horizontal_bar_labels(df, key, value, color):
             fig['layout'][axis]['visible'] = False
 
     fig.update_layout(
-        template='plotly_dark',
+        # template='plotly_dark',
         margin=dict(l=0, b=0, r=0, t=90),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
@@ -331,7 +327,7 @@ def absolute_relative_figure(df, list_colors, choice_graph, title):
 
     fig.update_layout(
         hovermode=hovermode,
-        template="plotly_dark",
+        # template="plotly_dark",
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",
         font={"family": "Lato", "size": 14},
@@ -345,7 +341,7 @@ def absolute_relative_figure(df, list_colors, choice_graph, title):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Série temporelle {choice_graph} (1970-2017) "
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
                 "y": 0.91,
                 "xanchor": "right",

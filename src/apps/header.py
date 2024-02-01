@@ -6,7 +6,7 @@ navigation = html.Div(className="nav-scroller shadow-lg mb-5 text-center", child
     html.Div(className="nav text-center", children=[
         
         html.A(
-            "En un clin d'oeil (resumé)", 
+            "At a glance (Quick Overveiw)",
             className="nav-link text-dark active", 
             href="/Overview"
         ),

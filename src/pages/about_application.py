@@ -2,13 +2,17 @@ import dash
 from dash import html, dcc
 
 
-app_name = "a-propos-de-l-application"
+app_name = "about"
 
 dash.register_page(__name__, path=f"/{app_name}", title=app_name, description=app_name, name=app_name)
 
 layout = html.Div(id=app_name, className="container-fluid container-md", children=[
         
-    html.H1("À propos de M3Analytics", className="mb-5 fw-bold display-1"),
+    html.H1(className="mb-5 fw-bold display-2 fw-bold", children=[
+        html.Span("About ",),
+        html.Span("Analytics", className="fw-bold"),
+        html.Span("Paper", className="fw-bold", style={"color": "red"}),
+    ]),
     
     
     html.Div(className="row", children=[
@@ -86,12 +90,15 @@ layout = html.Div(id=app_name, className="container-fluid container-md", childre
         html.Div(className="col-lg-4", children=[
             
             html.Div(className="mt-4 text-center", children=[
-                html.H4("À propos de l'auteur:", className="mb-3 fw-bold"),
-                html.Div(className="div-img", children=[
+                html.H4("About author:", className="mb-2 fw-bold"),
+                html.Div(className="", children=[
                     html.Img(
-                        src=dash.get_asset_url('chris.png'), 
-                        className="div-img img-responsive rounded-square mb-4",
-                        style={"height": "160px", "width": "180px"}
+                        src=dash.get_asset_url('cccb-6.png'),
+                        className="div-img img-responsive rounded-circle mb-2",
+                        style={
+                            "height": "170px", 
+                            "width": "180px",
+                        }
                     ),
                 ]),
                 dcc.Markdown(

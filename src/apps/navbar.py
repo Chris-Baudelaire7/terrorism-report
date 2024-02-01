@@ -23,7 +23,7 @@ navbar = html.Div(className="header container-fluid p-2 mb-5", children=[
                                 ff="serif",
                                 className="m3", 
                                 children=[
-                                    html.Span("Analytics", className="text-white"),
+                                    html.Span("Analytics", className="text-black"),
                                     html.Span("Paper", className="text-red", style={'color': 'red'})
                                 ]
                             ),
@@ -35,7 +35,7 @@ navbar = html.Div(className="header container-fluid p-2 mb-5", children=[
             ]),
         
         html.Div(className="ms ms-lg-5 d-none d-xl-block", children=[
-            html.H3("Terrorism In The World", className="title-header"),
+            html.H3("Report on Terrorism Analysis", className="title-header"),
             html.H6("Statistical Analysis And Data Visualization", className="subtitle-header text-muted text-center text-md-start")
         ]),
      ]),

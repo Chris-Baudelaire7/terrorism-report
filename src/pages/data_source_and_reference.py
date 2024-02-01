@@ -10,10 +10,6 @@ dash.register_page(__name__, path=f"/{app_name}", title=app_name, description=ap
 
 layout = html.Div(id=app_name, className="container container-lg layout", children=[
     
-    thesis.thesis,
-    
-    header.navigation,
-    
     html.H1("Source de données"),
     
     html.Div(className="data-source mb-5", children=[

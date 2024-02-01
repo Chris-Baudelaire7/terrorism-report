@@ -2,7 +2,8 @@ import dash
 from flask import Flask
 from dash import html, Dash
 import dash_bootstrap_components as dbc
-
+import dash_admin_components as dac
+import dash_mantine_components as dmc
 from apps import navbar
 
 from callback.callback1 import *
@@ -11,6 +12,7 @@ from callback.callback3 import *
 from callback.callback4 import *
 from callback.other_graph_callback import *
 from callback.callback_special import *
+from components import *
 
 
 
@@ -28,7 +30,8 @@ app_params = {
 }
 
 server_params = {
-    "debug": False, 
+    "debug": True, 
+    "port":27770,
 }
 
 
@@ -38,14 +41,26 @@ app = Dash(__name__, **app_params)
 
 server = app.server
 
-app.layout = html.Div(id="app-root", className="app-root", children=[
-    
-    navbar.navbar, 
-        
-    html.Div(id="pages", className="pages", children=[
-        dash.page_container
+app.layout = dac.Page(id="app-root", className="app-root", children=[
+
+    dmc.NotificationsProvider([
+
+
+        navbar, sidebar, controlbar,
+
+        html.Div(id="notifications-container"),
+
+        dac.Body(className="page bg-white", children=[
+            dash.page_container
+        ]),
+
+       # footer,
+
     ]),
     
+    html.Script(src="echarts.js"),
+    html.Script(src="theme/vintage.js")
+
 ])
 
 

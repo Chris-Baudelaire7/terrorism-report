@@ -104,7 +104,7 @@ def func(range_date, geo, metric, slider):
                 y=data["p05"],
                 name="Area between p05 and p95",
                 fill="tonexty",
-                fillcolor="#000",
+                fillcolor="lightgray",
                 line_color="rgba(0,0,0,0)",
                 showlegend=False,
                 hoverinfo="skip",
@@ -183,7 +183,7 @@ def func(range_date, geo, metric, slider):
                 x=data["date"],
                 y=data["mean"],
                 name="Mean",
-                line={"color": "white", "width": 2.5},
+                line={"color": "black", "width": 2.5},
                 showlegend=False,
                 hovertemplate=(
                     "%{y:.1f}"
@@ -216,7 +216,7 @@ def func(range_date, geo, metric, slider):
     # Loop over months and add a shape for each month
     for month, days in months_with_days.items():
         # Define background color
-        bg_color = "#000" if (month % 2) == 0 else "#111"
+        bg_color = "white" if (month % 2) == 0 else "whitesmoke"
 
         fig.add_shape(
             type="rect",
@@ -253,7 +253,7 @@ def func(range_date, geo, metric, slider):
         xanchor="center",
         yanchor="middle",
         arrowwidth=.5,
-        arrowcolor="white",
+        arrowcolor="black",
         name="Reference period mean",
     )
 
@@ -283,7 +283,7 @@ def func(range_date, geo, metric, slider):
         xanchor="center",
         yanchor="middle",
         arrowwidth=.5,
-        arrowcolor="white",
+        arrowcolor="black",
         name="Reference period mean",
     )
 
@@ -321,7 +321,7 @@ def func(range_date, geo, metric, slider):
 
 
     fig.update_layout(
-        template="plotly_dark",
+        # # template="plotly_dark",,,
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",
         height=500,
@@ -333,7 +333,7 @@ def func(range_date, geo, metric, slider):
                 f"<b>Repartition du nombre d'attaque terroriste en {year}</b><br />"
                 f"<sup style='color:silver'>Comparé aux attaques moyens historique ({range_date[0]} - {range_date[1]})"
             ),
-            "font": {"family": "serif", "size": 32, "color": "white"},
+            "font": {"family": "serif", "size": 32, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",

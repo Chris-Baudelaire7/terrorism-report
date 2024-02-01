@@ -24,11 +24,11 @@ def toggle_collapse(n, is_open):
 
 
 @callback(
-    Output("dropdown-cause", "value"),
-    Output("dropdown-group", "value"),
-    Output("dropdown-attack", "value"),
-    Output("dropdown-target", "value"),
-    Output("dropdown-weapon", "value"),
+    Output("cause", "value"),
+    Output("group", "value"),
+    Output("attack", "value"),
+    Output("target", "value"),
+    Output("weapon", "value"),
     Input("reset", "n_clicks"),
     prevent_initial_call=True,
 )
@@ -43,255 +43,6 @@ def reset_dropdown_value(n_clicks):
 def display_selected_data(selectedData):
     return json.dumps(selectedData, indent=2)
 
-
-
-@callback(
-    Output("country-timeseries", "figure"),
-    Input("date-range-slider", "value"),
-    Input("dropdown-cause", "value"),
-    Input("dropdown-group", "value"),
-    Input("dropdown-attack", "value"),
-    Input("dropdown-target", "value"),
-    Input("dropdown-weapon", "value"),
-    Input("choice_serie_type_countries", "value"),
-)
-def country_timeseries(range_date, cause, group, attack, target, weapon, rel_abs):
-    data = data_date_filter(range_date)
-    data = data_filter(data, group, attack, target, weapon)
-    
-    def group_data(df):
-        if cause == "nwound" or cause == "nkill":
-            title = "Évolution du nombre de décès dus<br>à l'activité terroriste par pays" if cause == "nkill" else \
-                "Évolution du nombre de blessés dus<br> à l'activité terroriste par année"
-            df = df.groupby(["year", "country"], as_index=False)[cause].sum()
-        else:
-            title = "Évolution du nombre d'attaque<br>terroriste par pays"
-            df = df.groupby(["year", "country"], as_index=False).size()
-            
-        return df, title
-        
-    most_affected = data[data.country.isin(["Iraq","Afghanistan","Pakistan","India","Syria", "Nigeria"])]
-    most_affected, title = group_data(most_affected)
-    most_affected = pd.pivot_table(most_affected, index="year", columns="country", values=cause)
-    most_affected = most_affected.reset_index()
-
-    rest_of_world = data[~data.country.isin(["Iraq","Afghanistan","Pakistan","India","Nigeria"])]
-    rest_of_world, _ = group_data(rest_of_world)
-    rest_of_world = pd.pivot_table(rest_of_world, index="year", columns="country", values=cause)
-    rest_of_world = rest_of_world.sum(axis=1).reset_index().rename(columns={0:"rest of world"})
-
-    df = pd.merge(most_affected, rest_of_world, on="year")
-    df = df[["year", "Nigeria", "Syria", "India","Pakistan", "Afghanistan","Iraq", "rest of world",]]
-
-    colors = ['grey','rgb(103,0,13)', 'rgb(165,15,21)',  'rgb(203,24,29)','rgb(251,106,74)','rgb(252,187,161)','rgb(255,245,240)'][::-1]
-    
-    
-    fig = absolute_relative_figure(df, colors, rel_abs, title)
-    
-    return fig
-
-
-
-@callback(
-    Output("terrorist-killed", "figure"),
-    Input("date-range-slider", "value"),
-    Input("dropdown-group", "value"),
-    Input("dropdown-attack", "value"),
-    Input("dropdown-target", "value"),
-    Input("dropdown-weapon", "value"),
-)
-def timeseries_terrorist_killed(range_date, group, attack, target, weapon):
-    df = data_date_filter(range_date)
-    data = data_filter(df, group, attack, target, weapon)
-    
-    data_nkiller = data.groupby("year", as_index=False)[["nkillter"]].sum()
-    data_nkiller["cumsum"] = data_nkiller["nkillter"].cumsum()
-    
-    fig = px.bar(data_nkiller, x="year", y="nkillter", color="nkillter", color_continuous_scale="reds")
-    fig.update_coloraxes(showscale=False)
-    
-    fig.add_scatter(
-        x=data_nkiller["year"], y=data_nkiller["cumsum"],
-        yaxis="y2", name="Somme cumulée",
-        line=dict(width=2, color='whitesmoke'),
-    )
-    
-    fig.update_layout(
-        **update_layout_simple,
-        bargap=.1,
-        showlegend=False,
-        xaxis=dict(title=None, showgrid=False),
-        yaxis=dict(title="Nombre de terroriste tuées", showgrid=False),
-        yaxis2=dict(
-            title="Somme cumulée", showgrid=False,
-            anchor="free",
-            overlaying="y",
-            side="right",
-            position=1
-        ),
-
-        font=dict(family="serif", color="white"),
-        height=450,
-        title={
-            "text": (
-                    f"<b>Evolution du nombre de terroriste<br>tués lors d'une attaque</b><br />"
-                    f"<sup style='color:silver'>Évolution de 1970 à 2017"
-                ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
-            "x": 0.98,
-                "y": 0.93,
-                "xanchor": "right",
-                "yanchor": "top",
-        },
-    )
-    
-    legend(fig)
-    
-    return fig
-
-
-
-@callback(
-    Output("global-incidence-timeseries", "figure"),
-    Input("date-range-slider", "value"),
-    Input("dropdown-cause", "value"),
-    Input("dropdown-group", "value"),
-    Input("dropdown-attack", "value"),
-    Input("dropdown-target", "value"),
-    Input("dropdown-weapon", "value"),
-)
-def global_incidence_timeseries(range_date, cause, group, attack, target, weapon):
-    df = data_date_filter(range_date)
-    data = data_filter(df, group, attack, target, weapon)
-    
-    if cause == "nwound" or cause == "nkill":
-        title = "Évolution du nombre de décès dus<br>à l'activité terroriste par année" if cause == "nkill" else \
-                "Évolution du nombre de blessés dus<br> à l'activité terroriste par année"
-    else:
-        title = "Évolution du nombre d'attaque<br>terroriste par année"
-                
-    
-    data_victim = data.groupby(["year"], as_index=False)[["nkill", "nwound"]].sum()
-    data_count = data.groupby(["year"], as_index=False).size()
-    merged_data = pd.merge(data_victim, data_count, on="year")
-    merged_data["victim"] = merged_data["nkill"] + merged_data["nwound"]
-    merged_data["cumsum"] = merged_data["size"].cumsum()
-        
-    fig = px.bar(merged_data, x="year", y=cause, color=cause, color_continuous_scale="reds")
-    fig.update_coloraxes(showscale=False)
-    
-    fig.add_scatter(
-        x=merged_data["year"], y=merged_data["cumsum"],
-        yaxis="y2", name="Somme cumulée",
-        line=dict(width=2, color='firebrick'),
-    )
-    
-    fig.update_layout(
-        **update_layout_simple,
-        bargap=.1,
-        showlegend=False,
-        xaxis=dict(title=None, showgrid=False),
-        yaxis=dict(title="Incidence", showgrid=False),
-        yaxis2=dict(
-            title="Somme cumulée", showgrid=False,
-            anchor="free",
-            overlaying="y",
-            side="right",
-            position=1
-        ),
-
-        font=dict(family="serif", color="white"),
-        height=450,
-        title={
-            "text": (
-                    f"<b>{title}</b><br />"
-                    f"<sup style='color:silver'>Évolution de 1970 à 2017</sup>"
-                ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
-            "x": 0.98,
-                "y": 0.93,
-                "xanchor": "right",
-                "yanchor": "top",
-        },
-    )
-    
-    legend(fig)
-
-    
-    return fig
-
-
-
-
-
-@callback(
-    Output("by-region", "figure"),
-    Input("date-range-slider", "value"),
-    Input("dropdown-cause", "value"),
-    Input("dropdown-group", "value"),
-    Input("dropdown-attack", "value"),
-    Input("dropdown-target", "value"),
-    Input("dropdown-weapon", "value"),
-    Input("choice_serie_type_region", "value"),
-)
-def region_timerseries(range_date, cause, group, attack, target, weapon, rel_abs):
-    # fiter data
-    data = data_date_filter(range_date)
-    data = data_filter(data, group, attack, target, weapon)
-    
-    colors_region =  px.colors.sequential.Blues[::-2] +  px.colors.sequential.Reds[1:]
-    cols_region = ['Middle East & North Africa', 'South Asia', 'Sub-Saharan Africa',
-                   'South America', 'Central America & Caribbean', 'Southeast Asia',
-                   'Eastern Europe', 'Western Europe', 'North America', 'East Asia',
-                   'Central Asia', 'Australasia & Oceania'][::-1]
-    
-    if cause == "nwound" or cause == "nkill": 
-        data = data.groupby(["year", "region"], as_index=False)[cause].sum()
-    else:
-        data = data.groupby(["year", "region"], as_index=False).size()
-    
-    
-    data = data.pivot_table(index="year", columns="region", values=cause)
-    data = data[cols_region]
-    data = data.fillna(0).reset_index()
-    
-    fig = absolute_relative_figure(data, colors_region, rel_abs, "Repartion (en %) par region")
-    
-    return fig
-
-
-
-@callback(
-    Output("by-continent", "figure"),
-    Input("date-range-slider", "value"),
-    Input("dropdown-cause", "value"),
-    Input("dropdown-group", "value"),
-    Input("dropdown-attack", "value"),
-    Input("dropdown-target", "value"),
-    Input("dropdown-weapon", "value"),
-    Input("choice_serie_type_continent", "value"),
-)
-def region_timerseries(range_date, cause, group, attack, target, weapon, rel_abs):
-    # fiter data
-    data = data_date_filter(range_date)
-    data = data_filter(data, group, attack, target, weapon)
-    
-    colors_continent = ['rgb(255,245,240)','rgb(252,187,161)','rgb(251,106,74)','rgb(203,24,29)','rgb(103,0,13)']
-    cols_continent = ["Oceania", "Europe", "America", "Asia", "Africa"]
-    
-    if cause == "nwound" or cause == "nkill": 
-        data = data.groupby(["year", "continent"], as_index=False)[cause].sum()
-    else:
-        data = data.groupby(["year", "continent"], as_index=False).size()
-    
-    
-    data = data.pivot_table(index="year", columns="continent", values=cause)
-    data = data[cols_continent]
-    data = data.fillna(0).reset_index()
-    
-    fig = absolute_relative_figure(data, colors_continent, rel_abs, "Repartition en par continent")
-    
-    return fig
 
 
 
@@ -395,7 +146,7 @@ def rate_func(range_date, area, cause, group, attack, target, weapon):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Le terrorisme dans le monde "
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",
@@ -411,7 +162,7 @@ def rate_func(range_date, area, cause, group, attack, target, weapon):
 
 @callback(
     Output("period-distribution", "figure"),
-    Input("date-range-slider", "value"),
+    Input("range-slider", "value"),
     Input("filter-geo", "value"),
     Input("cause", "value"),
 )
@@ -453,7 +204,7 @@ def period_distribution(range_date, area, cause):
                     f"<b>Frequence du nombre d'attaque par jour</b><br />"
                     f"<sup style='color:silver'>Le terrorisme dans le monde "
                 ),
-            "font": {"family": "serif", "size": 25, "color": "white"},
+            "font": {"family": "serif", "size": 25, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",
@@ -540,7 +291,7 @@ def all_days_in_year_timeseries(cause, group, attack, target, weapon):
     # Loop over months and add a shape for each month
     for month, days in months_with_days.items():
         # Define background color
-        bg_color = "black" if (month % 2) == 0 else "#111"
+        bg_color = "white" if (month % 2) == 0 else "#fefefe"
 
         fig.add_shape(
             type="rect",
@@ -575,7 +326,7 @@ def all_days_in_year_timeseries(cause, group, attack, target, weapon):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Situtation globale dans le monde"
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
                 "y": 0.93,
                 "xanchor": "right",
@@ -630,7 +381,7 @@ def month_timeseries(range_date, area, cause, group, attack, target, weapon):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Situtation globale dans le monde"
                 ),
-            "font": {"family": "serif", "size": 22, "color": "white"},
+            "font": {"family": "serif", "size": 22, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",
@@ -765,7 +516,7 @@ def serie_rel_abs(range_date, area, cause, column):
         
     fig.update_layout(
         hovermode="closest",
-        template="plotly_dark",
+        # template="plotly_dark",,
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",
         font={"family": "Lato", "size": 14},
@@ -779,7 +530,7 @@ def serie_rel_abs(range_date, area, cause, column):
                     f"<b>{title}</b><br />"
                     f"<sup style='color:silver'>Série temporelle relative (1970-2017) "
                 ),
-            "font": {"family": "serif", "size": 30, "color": "white"},
+            "font": {"family": "serif", "size": 30, "color": "black"},
             "x": 0.98,
                 "y": 0.91,
                 "xanchor": "right",
@@ -843,7 +594,7 @@ def terrorist_group(columns, cause):
 
     fig.update_layout(
         font={"family": "Lato", "size": 14},
-        template="plotly_dark",
+        # template="plotly_dark",,
         plot_bgcolor="rgba(0, 0, 0, 0)",
         paper_bgcolor="rgba(0, 0, 0, 0)",
         margin=dict(l=0, r=0, t=130),
@@ -854,7 +605,7 @@ def terrorist_group(columns, cause):
                     f"<b>Region touchées par les grands<br>groupes de terreurs</b><br />"
                     f"<sup style='color:silver'>Le terrorisme dans le monde "
                 ),
-            "font": {"family": "serif", "size": 32, "color": "white"},
+            "font": {"family": "serif", "size": 32, "color": "black"},
             "x": 0.98,
             "y": 0.93,
             "xanchor": "right",

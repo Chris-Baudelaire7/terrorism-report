@@ -3,70 +3,31 @@
 
 
 body {
-    font-family: Playfair Display, Merriweather, serif !important;
+    font-family: Playfair Display, serif !important;
     overflow-x: hidden !important;
 }
 
-
-nav {
-    border: none !important;
+p, span, small, h1, h2, h3, h4, h5, h6 {
+  color: black !important;
 }
 
-
-.nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold !important;
+  font-family: Merriweather, serif !important;
 }
-
-.nav-scroller .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-}
-
-.nav-scroller .nav-link {
-  padding-top: .75rem !important;
-  padding-bottom: .75rem !important;
-}
-
-.nav-scroller .nav-link:hover {
-  color: #fefefe !important;
-}
-
-.nav-scroller .active {
-  font-weight: 500 !important;
-}
-
-
 
 
 .btn {
-    color: white;
+    color: rgb(0, 0, 0);
     background-color:transparent !important;
     border: 1px solid rgba(164, 164, 164, 0.263)
 }
 
 .m3 {
-  color:white !important;
+  color:rgb(0, 0, 0) !important;
   background-color: transparent !important;
   font-family: Lora !important;
 }
-
-.title {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* .layout {
-  margin: 
-} */
 
 
 /* dcc Dropdown -------------------------------------------------------------------------------------*/
@@ -78,26 +39,26 @@ nav {
 }
 
 .Select-value-label {
-    color: #fff !important;
+    color: #000000 !important;
     font-family: serif !important;
     font-size: 16px !important;
 }
 
 .Select-value-icon {
-    color: grey !important;
+    color: rgb(0, 0, 0) !important;
     font-size: 14px !important;
     padding: 0px !important;
 }
 
 .Select, .Select--multi, .is-open {
-    background-color: rgb(0, 0, 0) !important;
+    background-color: rgb(255, 255, 255) !important;
     color: rgb(255, 255, 255) !important;
     font-family: serif !important;
 }
 
 .Select > * {
-    background-color: rgb(0, 0, 0) !important;
-    color: rgb(235, 235, 235) !important;
+    background-color: rgb(255, 255, 255) !important;
+    color: rgb(0, 0, 0) !important;
     font-family: serif !important;
     font-size: 16px !important;
     border: 1px solid #40404068 !important;
@@ -116,12 +77,11 @@ nav {
 }
 
 
-
 /* Chip mantine ---------------------------------------------------------------------------------------- */
 
 .mantine-15po0m8 > * {
   background-color: transparent !important;
-  color: white !important;
+  color: rgb(0, 0, 0) !important;
   font-family: serif !important;
   border: none !important; 
 }
@@ -146,31 +106,12 @@ nav {
   color: red !important;
   background-color: red !important;
   font-family: serif !important;
+  
 }
 
 .test-color {
   color:rgb(157, 191, 223),
 }
-
-/* .separate {
-  margin-top: 70px !important;
-  margin-bottom: 70px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  max-width: 40% !important;
-  height: 1px !important;
-  background-color: rgb(156, 22, 22) !important;
-  color: transparent !important;
-} */
-
-.separate {
-  margin-top: 90px !important;
-  margin-bottom: 90px !important;
-  height: 20px !important;
-  background-color: rgb(32, 31, 31) !important;
-  color: transparent !important;
-}
-
 
 
 .title-section {
@@ -178,25 +119,53 @@ nav {
   align-items: center;
 }
 
-.dash {
-  width: 10px;
-  height: 55px;
-  background: rgb(177, 12, 12);
-  margin-right: 10px
+.carte {
+    box-shadow: 0 7px 15px 0 rgba(0, 0, 0, .13), 0 1px 4px 0 rgba(0, 0, 0, .11);
+    background-color: #fff;
+    padding: 10px;
+    /* margin: 10px; */
+}
+
+.div-img {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.nav-icon {
+    margin-right: 7px !important;
+}
+
+nav a:hover {
+    text-decoration: none !important;
+    background-color: rgba(195, 195, 195, 0.172) !important;
+}
+
+nav a svg {
+    font-size: 20px !important;
+}
+
+.rightsidebar {
+  position: fixed !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 
-.affix {
-  width: 200px !important;
-  background-color: black !important;
+/* Acion icon ---------------------------------------------------------------------------------------- */
+
+.mantine-UnstyledButton-root, .mantine-ActionIcon-root, .mantine-yiqa98 {
+  width: 60px
 }
 
-*[class="output-example-loading"][data-dash-is-loading="true"]{
-    visibility: hidden;
+/* End Action icon ---------------------------------------------------------------------------------------- */
+
+
+
+
+/* Dash deck ---------------------------------------------------------------------------------------- */
+
+#view-MapView, #mapboxgl-map, #deckgl-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    height:580px !important;
 }
-*[class="output-example-loading"][data-dash-is-loading="true"]::before{
-    content: "Loading...";
-    display: inline-block;
-    color: magenta;
-    visibility: visible;
-}
+
+/* End Dash deck ---------------------------------------------------------------------------------------- */
